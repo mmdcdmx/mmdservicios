@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460">
+  <rect width="800" height="460" fill="#FFF8E1" rx="16"/>
+  <ellipse cx="400" cy="430" rx="300" ry="14" fill="rgba(0,0,0,0.06)"/>
+  
+  <!-- Pared/soporte -->
+  <rect x="140" y="80" width="20" height="300" rx="6" fill="#D3D1C7"/>
+  
+  <!-- Brazo articulado -->
+  <rect x="155" y="120" width="100" height="14" rx="7" fill="#042C53"/>
+  <rect x="248" y="100" width="14" height="100" rx="7" fill="#042C53"/>
+  <rect x="248" y="194" width="90" height="14" rx="7" fill="#042C53"/>
+  
+  <!-- Cabezal de rayos X -->
+  <rect x="320" y="165" width="110" height="80" rx="12" fill="#0C447C"/>
+  <rect x="328" y="173" width="94" height="64" rx="8" fill="#185FA5"/>
+  <!-- Cono localizador -->
+  <path d="M375 245 L365 310 L385 310 Z" fill="#042C53"/>
+  <rect x="362" y="308" width="26" height="8" rx="4" fill="#042C53"/>
+  <!-- Indicador activo -->
+  <circle cx="375" cy="205" r="14" fill="#042C53"/>
+  <circle cx="375" cy="205" r="10" fill="#B80000"/>
+  <circle cx="375" cy="205" r="6" fill="#FF4444"/>
+  
+  <!-- Rayos X (haz) -->
+  <path d="M375 318 L330 420" stroke="#FFD700" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+  <path d="M375 318 L350 420" stroke="#FFD700" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+  <path d="M375 318 L375 425" stroke="#FFD700" stroke-width="2" opacity="0.6" stroke-dasharray="4,3"/>
+  <path d="M375 318 L400 420" stroke="#FFD700" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+  <path d="M375 318 L420 420" stroke="#FFD700" stroke-width="1.5" opacity="0.5" stroke-dasharray="4,3"/>
+  <!-- Zona de advertencia -->
+  <ellipse cx="375" cy="415" rx="55" ry="8" fill="#FFD700" opacity="0.2"/>
+  
+  <!-- Pulsador de disparo -->
+  <rect x="480" y="200" width="20" height="80" rx="6" fill="#D3D1C7"/>
+  <rect x="484" y="270" width="12" height="20" rx="6" fill="#FF4444"/>
+  <path d="M480 200 Q520 200 520 230" stroke="#042C53" stroke-width="3" fill="none"/>
+  
+  <!-- Sensor/película digital -->
+  <rect x="340" y="390" width="70" height="40" rx="4" fill="#042C53"/>
+  <rect x="344" y="394" width="62" height="32" rx="3" fill="#0C447C"/>
+  <rect x="348" y="398" width="54" height="24" rx="2" fill="#185FA5" opacity="0.7"/>
+  <!-- Imagen dental en sensor -->
+  <ellipse cx="365" cy="410" rx="10" ry="8" fill="#9FE1CB" opacity="0.6"/>
+  <ellipse cx="382" cy="412" rx="8" ry="7" fill="#9FE1CB" opacity="0.5"/>
+  
+  <!-- Dosímetro/medidor -->
+  <rect x="540" y="150" width="140" height="170" rx="12" fill="#fff" stroke="#185FA5" stroke-width="2"/>
+  <rect x="540" y="150" width="140" height="36" rx="12" fill="#042C53"/>
+  <rect x="540" y="173" width="140" height="13" fill="#042C53"/>
+  <text x="610" y="173" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#9FE1CB" font-weight="bold">DOSÍMETRO</text>
+  <!-- Gauge de dosis -->
+  <circle cx="610" cy="240" r="50" fill="none" stroke="#D3D1C7" stroke-width="8"/>
+  <circle cx="610" cy="240" r="50" fill="none" stroke="#0F6E56" stroke-width="8" stroke-dasharray="110 204" stroke-dashoffset="-20" stroke-linecap="round"/>
+  <text x="610" y="234" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#042C53" font-weight="bold">2.4</text>
+  <text x="610" y="250" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5F5E5A">mGy/ciclo</text>
+  <!-- Texto ALARA -->
+  <text x="610" y="296" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#0F6E56" font-weight="bold">✓ ALARA</text>
+  <text x="610" y="310" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#5F5E5A">Dosis dentro del rango</text>
+
+  <!-- Símbolo de radiación estilizado -->
+  <circle cx="700" cy="100" r="18" fill="none" stroke="#FFD700" stroke-width="3" opacity="0.4"/>
+  <path d="M700 82 L700 72 M714 90 L722 85 M714 110 L722 115 M700 118 L700 128 M686 110 L678 115 M686 90 L678 85" stroke="#FFD700" stroke-width="2" opacity="0.4"/>
+  <circle cx="700" cy="100" r="6" fill="#FFD700" opacity="0.4"/>
+  
+  <text x="400" y="450" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" fill="#5F5E5A" font-weight="600">MMD Servicios · Calibración y Mantenimiento de Equipos de Rayos X Dental</text>
+</svg>

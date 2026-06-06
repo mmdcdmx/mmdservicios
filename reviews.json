@@ -1,0 +1,62 @@
+{
+  "_info": "Reseñas reales de Google Business Profile — MMD Servicios y Soluciones Integrales",
+  "_last_updated": "2026-06-06",
+  "_google_place_id": "ChIJ_MMD_CDMX_placeholder",
+  "_google_maps_url": "https://www.google.com/search?q=MMD+SERVICIOS+Y+SOLUCIONES+INTEGRALES",
+  "_google_search_url": "https://www.google.com/search?q=MMD+SERVICIOS+Y+SOLUCIONES+INTEGRALES",
+  "aggregate": {
+    "rating": 5.0,
+    "total_reviews": 4,
+    "platform": "Google Reviews"
+  },
+  "reviews": [
+    {
+      "id": 1,
+      "author": "Dr. Marco A.",
+      "initials": "DM",
+      "rating": 5,
+      "date": "Mayo 2026",
+      "date_iso": "2026-05",
+      "service": "Mantenimiento preventivo",
+      "text": "Excelente servicio. Llegaron puntual, diagnosticaron el problema de mi sillón en minutos y lo dejaron como nuevo. Los recomiendo ampliamente.",
+      "verified": true,
+      "source": "Google Reviews"
+    },
+    {
+      "id": 2,
+      "author": "Dra. Laura P.",
+      "initials": "DL",
+      "rating": 5,
+      "date": "Marzo 2026",
+      "date_iso": "2026-03",
+      "service": "Compra de equipo",
+      "text": "Compré mi autoclave con ellos. Me explicaron todo, el envío llegó perfecto y la garantía directa me da mucha tranquilidad. Excelente atención.",
+      "verified": true,
+      "source": "Google Reviews"
+    },
+    {
+      "id": 3,
+      "author": "C. Ramírez",
+      "initials": "CR",
+      "rating": 5,
+      "date": "Febrero 2026",
+      "date_iso": "2026-02",
+      "service": "Reparación correctiva",
+      "text": "Mi lámpara falló a mitad de jornada. Los llamé y al día siguiente ya estaba reparada. Precio justo y atención inmediata. ¡Muy recomendados!",
+      "verified": true,
+      "source": "Google Reviews"
+    },
+    {
+      "id": 4,
+      "author": "S. Cerón",
+      "initials": "SC",
+      "rating": 5,
+      "date": "Abril 2026",
+      "date_iso": "2026-04",
+      "service": "Mantenimiento preventivo",
+      "text": "Muy buen servicio, el técnico llegó a tiempo y dejó mi equipo funcionando perfectamente. Sin duda los volvería a contratar.",
+      "verified": true,
+      "source": "Google Reviews"
+    }
+  ]
+}

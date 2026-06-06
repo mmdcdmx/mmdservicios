@@ -1,0 +1,97 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460">
+  <!-- Fondo -->
+  <rect width="800" height="460" fill="#F0F6FF" rx="16"/>
+  <!-- Sombra suelo -->
+  <ellipse cx="400" cy="420" rx="320" ry="18" fill="rgba(0,0,0,0.06)"/>
+  
+  <!-- Unidad dental - base sillón -->
+  <rect x="180" y="280" width="260" height="120" rx="14" fill="#0C447C"/>
+  <rect x="190" y="290" width="240" height="100" rx="10" fill="#185FA5"/>
+  <!-- Colchón sillón -->
+  <rect x="185" y="240" width="250" height="60" rx="12" fill="#E6F1FB"/>
+  <rect x="190" y="245" width="240" height="50" rx="10" fill="#fff"/>
+  <rect x="190" y="245" width="240" height="6" rx="3" fill="#B5D4F4"/>
+  <!-- Respaldo sillón -->
+  <rect x="370" y="140" width="70" height="110" rx="12" fill="#E6F1FB"/>
+  <rect x="375" y="145" width="60" height="100" rx="10" fill="#fff"/>
+  <rect x="375" y="145" width="60" height="6" rx="3" fill="#B5D4F4"/>
+  <!-- Reposacabezas -->
+  <rect x="378" y="118" width="54" height="32" rx="8" fill="#E6F1FB"/>
+  <rect x="382" y="122" width="46" height="24" rx="6" fill="#fff"/>
+  <!-- Brazo instrumental -->
+  <rect x="430" y="200" width="8" height="100" rx="4" fill="#042C53"/>
+  <rect x="438" y="195" width="80" height="8" rx="4" fill="#042C53"/>
+  <!-- Mangueras -->
+  <path d="M518 195 Q560 180 570 160" stroke="#9FE1CB" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M518 195 Q555 200 565 220" stroke="#185FA5" stroke-width="4" fill="none" stroke-linecap="round"/>
+  <path d="M518 195 Q550 210 558 235" stroke="#FFD700" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <!-- Instrumentos en brazo -->
+  <rect x="505" y="155" width="8" height="28" rx="4" fill="#0C447C"/>
+  <rect x="518" y="158" width="8" height="24" rx="4" fill="#0C447C"/>
+  <rect x="531" y="161" width="8" height="22" rx="4" fill="#0C447C"/>
+  <!-- Lámpara dental -->
+  <path d="M290 200 Q310 180 350 175" stroke="#FFD700" stroke-width="6" fill="none" stroke-linecap="round"/>
+  <ellipse cx="355" cy="172" rx="22" ry="14" fill="#FFD700"/>
+  <ellipse cx="355" cy="172" rx="16" ry="10" fill="#FFFDE0"/>
+  <!-- Rayos de luz -->
+  <line x1="345" y1="186" x2="300" y2="230" stroke="#FFD700" stroke-width="2" opacity="0.4"/>
+  <line x1="355" y1="186" x2="320" y2="235" stroke="#FFD700" stroke-width="2" opacity="0.4"/>
+  <line x1="365" y1="184" x2="340" y2="230" stroke="#FFD700" stroke-width="2" opacity="0.4"/>
+
+  <!-- TÉCNICO (persona) -->
+  <!-- Cuerpo técnico -->
+  <rect x="530" y="220" width="60" height="130" rx="8" fill="#185FA5"/>
+  <!-- Cabeza -->
+  <circle cx="560" cy="200" r="30" fill="#FDBCB4"/>
+  <!-- Casco/gorra protectora -->
+  <ellipse cx="560" cy="182" rx="32" ry="14" fill="#FFD700"/>
+  <rect x="528" y="182" width="64" height="8" rx="4" fill="#E6B800"/>
+  <!-- Gafete MMD -->
+  <rect x="538" y="238" width="34" height="22" rx="4" fill="#fff"/>
+  <rect x="541" y="241" width="28" height="6" rx="2" fill="#185FA5"/>
+  <rect x="541" y="250" width="20" height="4" rx="2" fill="#9FE1CB"/>
+  <!-- Brazos técnico -->
+  <rect x="480" y="225" width="52" height="18" rx="8" fill="#185FA5"/>
+  <rect x="588" y="225" width="52" height="18" rx="8" fill="#185FA5"/>
+  <!-- Mano izquierda con llave inglesa -->
+  <rect x="462" y="235" width="22" height="10" rx="5" fill="#FDBCB4"/>
+  <!-- Llave inglesa -->
+  <rect x="440" y="232" width="28" height="8" rx="4" fill="#042C53"/>
+  <circle cx="438" cy="236" r="8" fill="#042C53" stroke="#9FE1CB" stroke-width="2"/>
+  <circle cx="438" cy="236" r="4" fill="#9FE1CB"/>
+  <!-- Mano derecha -->
+  <rect x="636" y="235" width="22" height="10" rx="5" fill="#FDBCB4"/>
+  <!-- Tablet/reporte -->
+  <rect x="658" y="218" width="36" height="46" rx="6" fill="#fff" stroke="#185FA5" stroke-width="2"/>
+  <rect x="663" y="225" width="26" height="4" rx="2" fill="#185FA5"/>
+  <rect x="663" y="233" width="20" height="3" rx="1" fill="#9FE1CB"/>
+  <rect x="663" y="240" width="22" height="3" rx="1" fill="#D3D1C7"/>
+  <rect x="663" y="247" width="18" height="3" rx="1" fill="#D3D1C7"/>
+  <!-- Check en tablet -->
+  <path d="M681 251 L684 254 L689 249" stroke="#0F6E56" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Piernas técnico -->
+  <rect x="530" y="348" width="26" height="60" rx="8" fill="#042C53"/>
+  <rect x="562" y="348" width="26" height="60" rx="8" fill="#042C53"/>
+  <!-- Zapatos -->
+  <ellipse cx="543" cy="408" rx="18" ry="8" fill="#2C2C2A"/>
+  <ellipse cx="575" cy="408" rx="18" ry="8" fill="#2C2C2A"/>
+
+  <!-- Caja de herramientas -->
+  <rect x="80" y="350" width="100" height="60" rx="8" fill="#042C53"/>
+  <rect x="82" y="352" width="96" height="56" rx="6" fill="#0C447C"/>
+  <rect x="115" y="345" width="30" height="10" rx="5" fill="#185FA5"/>
+  <!-- Herramientas en caja -->
+  <rect x="92" y="368" width="16" height="30" rx="3" fill="#9FE1CB"/>
+  <rect x="114" y="362" width="14" height="36" rx="3" fill="#FFD700"/>
+  <rect x="134" y="370" width="12" height="28" rx="3" fill="#9FE1CB"/>
+  <rect x="152" y="366" width="14" height="32" rx="3" fill="#185FA5"/>
+
+  <!-- Partículas decorativas -->
+  <circle cx="140" cy="120" r="6" fill="#9FE1CB" opacity="0.6"/>
+  <circle cx="680" cy="100" r="10" fill="#FFD700" opacity="0.4"/>
+  <circle cx="720" cy="160" r="5" fill="#185FA5" opacity="0.3"/>
+  <circle cx="100" cy="200" r="8" fill="#0F6E56" opacity="0.3"/>
+  
+  <!-- Texto MMD -->
+  <text x="400" y="450" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" fill="#5F5E5A" font-weight="600">MMD Servicios · Mantenimiento Preventivo de Unidades Dentales</text>
+</svg>

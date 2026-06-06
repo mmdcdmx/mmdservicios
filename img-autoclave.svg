@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460">
+  <rect width="800" height="460" fill="#E6F1FB" rx="16"/>
+  <ellipse cx="400" cy="430" rx="300" ry="14" fill="rgba(0,0,0,0.06)"/>
+  
+  <!-- Autoclave cuerpo principal -->
+  <rect x="220" y="160" width="300" height="220" rx="20" fill="#0C447C"/>
+  <rect x="230" y="170" width="280" height="200" rx="16" fill="#185FA5"/>
+  <!-- Puerta circular del autoclave -->
+  <circle cx="370" cy="270" r="80" fill="#042C53"/>
+  <circle cx="370" cy="270" r="72" fill="#0C447C" stroke="#9FE1CB" stroke-width="3"/>
+  <circle cx="370" cy="270" r="62" fill="#185FA5"/>
+  <!-- Manija de puerta -->
+  <rect x="330" y="348" width="80" height="14" rx="7" fill="#FFD700"/>
+  <circle cx="330" cy="355" r="10" fill="#FFD700"/>
+  <circle cx="410" cy="355" r="10" fill="#FFD700"/>
+  <!-- Indicador temperatura/presión -->
+  <circle cx="370" cy="270" r="48" fill="#042C53" opacity="0.8"/>
+  <text x="370" y="258" text-anchor="middle" font-family="sans-serif" font-size="16" fill="#9FE1CB" font-weight="bold">134°C</text>
+  <text x="370" y="278" text-anchor="middle" font-family="sans-serif" font-size="12" fill="#FFD700">2 atm</text>
+  <text x="370" y="296" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#fff" opacity="0.7">ESTERILIZANDO</text>
+  <!-- Barra de progreso -->
+  <rect x="340" y="302" width="60" height="6" rx="3" fill="#042C53"/>
+  <rect x="340" y="302" width="45" height="6" rx="3" fill="#0F6E56"/>
+
+  <!-- Display digital lateral -->
+  <rect x="520" y="190" width="120" height="80" rx="10" fill="#042C53"/>
+  <rect x="526" y="196" width="108" height="68" rx="6" fill="#0a1a2e"/>
+  <text x="580" y="220" text-anchor="middle" font-family="monospace" font-size="11" fill="#9FE1CB">CICLO B</text>
+  <text x="580" y="236" text-anchor="middle" font-family="monospace" font-size="18" fill="#FFD700" font-weight="bold">18:42</text>
+  <text x="580" y="252" text-anchor="middle" font-family="monospace" font-size="10" fill="#0F6E56">● ACTIVO</text>
+  
+  <!-- Indicadores LED -->
+  <circle cx="540" cy="290" r="8" fill="#0F6E56"/>
+  <text x="556" y="294" font-family="sans-serif" font-size="10" fill="#fff">TEMP OK</text>
+  <circle cx="540" cy="310" r="8" fill="#0F6E56"/>
+  <text x="556" y="314" font-family="sans-serif" font-size="10" fill="#fff">PRES OK</text>
+  <circle cx="540" cy="330" r="8" fill="#FFD700"/>
+  <text x="556" y="334" font-family="sans-serif" font-size="10" fill="#fff">CICLO...</text>
+
+  <!-- Vapor saliendo -->
+  <path d="M240 160 Q230 130 240 100 Q248 75 235 50" stroke="#9FE1CB" stroke-width="4" fill="none" stroke-linecap="round" opacity="0.7"/>
+  <path d="M260 155 Q255 125 265 95 Q273 70 260 45" stroke="#9FE1CB" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <path d="M280 158 Q278 128 285 100" stroke="#9FE1CB" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.4"/>
+  
+  <!-- Instrumental en bandeja -->
+  <rect x="100" y="320" width="110" height="70" rx="8" fill="#fff" stroke="#B5D4F4" stroke-width="2"/>
+  <rect x="108" y="328" width="94" height="54" rx="6" fill="#F0F6FF"/>
+  <!-- Instrumental -->
+  <rect x="116" y="335" width="8" height="38" rx="4" fill="#185FA5"/>
+  <rect x="130" y="335" width="8" height="38" rx="4" fill="#185FA5"/>
+  <rect x="144" y="335" width="8" height="38" rx="4" fill="#185FA5"/>
+  <rect x="158" y="335" width="8" height="38" rx="4" fill="#185FA5"/>
+  <rect x="172" y="335" width="8" height="38" rx="4" fill="#185FA5"/>
+  <!-- Etiqueta verificado -->
+  <rect x="108" y="382" width="50" height="14" rx="3" fill="#0F6E56"/>
+  <text x="133" y="393" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">✓ ESTÉRIL</text>
+  <!-- Indicador biológico -->
+  <rect x="162" y="382" width="40" height="14" rx="3" fill="#E6F1FB" stroke="#B5D4F4" stroke-width="1"/>
+  <text x="182" y="393" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#185FA5">BIO OK</text>
+
+  <!-- Tabla de datos -->
+  <rect x="600" y="300" width="150" height="110" rx="8" fill="#fff" stroke="#B5D4F4" stroke-width="1"/>
+  <rect x="600" y="300" width="150" height="24" rx="8" fill="#042C53"/>
+  <rect x="600" y="316" width="150" height="8" rx="0" fill="#042C53"/>
+  <text x="675" y="317" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#fff" font-weight="bold">REGISTRO CICLO</text>
+  <text x="612" y="336" font-family="sans-serif" font-size="9" fill="#5F5E5A">Temp máx: 134.2°C</text>
+  <text x="612" y="350" font-family="sans-serif" font-size="9" fill="#5F5E5A">Presión: 2.1 atm</text>
+  <text x="612" y="364" font-family="sans-serif" font-size="9" fill="#5F5E5A">Duración: 18 min</text>
+  <text x="612" y="378" font-family="sans-serif" font-size="9" fill="#5F5E5A">Resultado: APROBADO</text>
+  <rect x="610" y="388" width="70" height="14" rx="3" fill="#0F6E56"/>
+  <text x="645" y="399" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">✓ CONFORME</text>
+
+  <text x="400" y="450" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" fill="#5F5E5A" font-weight="600">MMD Servicios · Mantenimiento y Calibración de Autoclaves Dentales</text>
+</svg>

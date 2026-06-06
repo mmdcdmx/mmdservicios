@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 460">
+  <rect width="800" height="460" fill="#EDE7F6" rx="16"/>
+  <ellipse cx="400" cy="430" rx="300" ry="14" fill="rgba(0,0,0,0.06)"/>
+  
+  <!-- Nube central MMD -->
+  <ellipse cx="400" cy="200" rx="100" ry="70" fill="#185FA5"/>
+  <ellipse cx="350" cy="220" rx="70" ry="55" fill="#185FA5"/>
+  <ellipse cx="450" cy="220" rx="70" ry="55" fill="#185FA5"/>
+  <ellipse cx="400" cy="200" rx="95" ry="65" fill="#0C447C"/>
+  <!-- Logo MMD en centro -->
+  <text x="400" y="195" text-anchor="middle" font-family="sans-serif" font-size="22" fill="#9FE1CB" font-weight="bold">MMD</text>
+  <text x="400" y="215" text-anchor="middle" font-family="sans-serif" font-size="10" fill="#fff">SERVICIOS</text>
+  <text x="400" y="228" text-anchor="middle" font-family="sans-serif" font-size="8" fill="#9FE1CB">+20 AÑOS</text>
+  
+  <!-- Líneas conectoras -->
+  <line x1="306" y1="200" x2="200" y2="150" stroke="#9FE1CB" stroke-width="2" stroke-dasharray="6,4" opacity="0.7"/>
+  <line x1="306" y1="220" x2="190" y2="260" stroke="#9FE1CB" stroke-width="2" stroke-dasharray="6,4" opacity="0.7"/>
+  <line x1="306" y1="240" x2="200" y2="320" stroke="#9FE1CB" stroke-width="2" stroke-dasharray="6,4" opacity="0.7"/>
+  <line x1="494" y1="200" x2="600" y2="150" stroke="#9FE1CB" stroke-width="2" stroke-dasharray="6,4" opacity="0.7"/>
+  <line x1="494" y1="220" x2="610" y2="260" stroke="#9FE1CB" stroke-width="2" stroke-dasharray="6,4" opacity="0.7"/>
+  <line x1="494" y1="240" x2="600" y2="320" stroke="#9FE1CB" stroke-width="2" stroke-dasharray="6,4" opacity="0.7"/>
+  <line x1="400" y1="132" x2="400" y2="80" stroke="#9FE1CB" stroke-width="2" stroke-dasharray="6,4" opacity="0.7"/>
+
+  <!-- Nodos de servicios -->
+  <!-- Nodo arriba: Mantenimiento -->
+  <circle cx="400" cy="70" r="42" fill="#0F6E56"/>
+  <text x="400" y="63" text-anchor="middle" font-family="sans-serif" font-size="16">🔧</text>
+  <text x="400" y="80" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">MANTENI-</text>
+  <text x="400" y="92" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">MIENTO</text>
+  <!-- Nodo izq-arriba: Reparación -->
+  <circle cx="180" cy="140" r="40" fill="#B80000"/>
+  <text x="180" y="133" text-anchor="middle" font-family="sans-serif" font-size="16">⚡</text>
+  <text x="180" y="150" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">REPA-</text>
+  <text x="180" y="162" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">RACIÓN</text>
+  <!-- Nodo izq-medio: Autoclave -->
+  <circle cx="168" cy="260" r="40" fill="#185FA5"/>
+  <text x="168" y="253" text-anchor="middle" font-family="sans-serif" font-size="16">🔵</text>
+  <text x="168" y="270" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">AUTO-</text>
+  <text x="168" y="282" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">CLAVE</text>
+  <!-- Nodo izq-bajo: Refacciones -->
+  <circle cx="188" cy="328" r="40" fill="#BA7517"/>
+  <text x="188" y="321" text-anchor="middle" font-family="sans-serif" font-size="16">🔩</text>
+  <text x="188" y="338" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">REFAC-</text>
+  <text x="188" y="350" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">CIONES</text>
+  <!-- Nodo der-arriba: Rayos X -->
+  <circle cx="620" cy="140" r="40" fill="#FFD700"/>
+  <text x="620" y="133" text-anchor="middle" font-family="sans-serif" font-size="16">☢️</text>
+  <text x="620" y="150" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#042C53" font-weight="bold">RAYOS X</text>
+  <text x="620" y="162" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#042C53" font-weight="bold">DENTAL</text>
+  <!-- Nodo der-medio: Compresor -->
+  <circle cx="632" cy="260" r="40" fill="#0F6E56"/>
+  <text x="632" y="253" text-anchor="middle" font-family="sans-serif" font-size="16">💨</text>
+  <text x="632" y="270" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">COMPRE-</text>
+  <text x="632" y="282" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#fff" font-weight="bold">SORES</text>
+  <!-- Nodo der-bajo: Instalación -->
+  <circle cx="612" cy="328" r="40" fill="#042C53"/>
+  <text x="612" y="321" text-anchor="middle" font-family="sans-serif" font-size="16">🏗️</text>
+  <text x="612" y="338" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9FE1CB" font-weight="bold">INSTA-</text>
+  <text x="612" y="350" text-anchor="middle" font-family="sans-serif" font-size="9" fill="#9FE1CB" font-weight="bold">LACIÓN</text>
+
+  <!-- WhatsApp flotante -->
+  <circle cx="400" cy="380" r="32" fill="#0F6E56"/>
+  <text x="400" y="388" text-anchor="middle" font-family="sans-serif" font-size="22">📱</text>
+  <text x="400" y="425" text-anchor="middle" font-family="sans-serif" font-size="11" fill="#042C53" font-weight="bold">Respuesta en &lt;2 horas</text>
+
+  <text x="400" y="450" text-anchor="middle" font-family="'DM Sans',sans-serif" font-size="13" fill="#5F5E5A" font-weight="600">MMD Servicios · Servicio Técnico Dental Especializado · CDMX y República Mexicana</text>
+</svg>
