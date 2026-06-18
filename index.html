@@ -830,292 +830,170 @@ document.addEventListener('click', function(e) {
 });
 
 // ---- MIMO FLOTANTE ----
-// Flujo de diagnóstico guiado: Equipo → Falla → Urgencia → Ubicación → WhatsApp
+// Flujo de diagnóstico guiado v3.0
 
-var mimoOpen = false;
-var DX = { step:0, equipo:'', falla:'', urgencia:'', ubicacion:'' };
+var _mimoIsOpen = false;
+var _mimoStarted = false;
+var _DX = { equipo: '', falla: '', urgencia: '', ubicacion: '' };
 
-var MIMO_OPCIONES = {
+var _OPTS = {
   equipo: [
-    { txt:'🦷 Unidad dental',  val:'Unidad dental' },
-    { txt:'💨 Compresor',      val:'Compresor dental' },
-    { txt:'🔵 Autoclave',      val:'Autoclave dental' },
-    { txt:'☢️ Rayos X',        val:'Equipo de rayos X' },
-    { txt:'✏️ Otro equipo',    val:'__otro_equipo__' }
+    { txt: '🦷 Unidad dental',  val: 'Unidad dental' },
+    { txt: '💨 Compresor',      val: 'Compresor dental' },
+    { txt: '🔵 Autoclave',      val: 'Autoclave dental' },
+    { txt: '☢️ Rayos X',        val: 'Equipo de rayos X' },
+    { txt: '✏️ Otro equipo',    val: '__otro__' }
   ],
   falla: {
-    'Unidad dental':     [
-      { txt:'🌊 Pérdida de succión',      val:'Pérdida de succión' },
-      { txt:'🪑 Problema en el sillón',   val:'Problema en el sillón' },
-      { txt:'⚙️ Fallo en piezas de mano', val:'Fallo en piezas de mano' },
-      { txt:'✏️ Otro (describir)',         val:'__otro__' }
+    'Unidad dental': [
+      { txt: '🌊 Pérdida de succión',      val: 'Pérdida de succión' },
+      { txt: '🪑 Problema en el sillón',   val: 'Problema en el sillón' },
+      { txt: '⚙️ Fallo en piezas de mano', val: 'Fallo en piezas de mano' },
+      { txt: '✏️ Describir otro',          val: '__otro__' }
     ],
-    'Compresor dental':  [
-      { txt:'🔌 No enciende',      val:'No enciende' },
-      { txt:'📉 Perdió potencia',  val:'Perdió potencia' },
-      { txt:'🔊 Hace ruido',       val:'Hace ruido inusual' },
-      { txt:'✏️ Otro (describir)', val:'__otro__' }
+    'Compresor dental': [
+      { txt: '🔌 No enciende',      val: 'No enciende' },
+      { txt: '📉 Perdió potencia',  val: 'Perdió potencia' },
+      { txt: '🔊 Hace ruido raro',  val: 'Ruido inusual' },
+      { txt: '✏️ Describir otro',   val: '__otro__' }
     ],
-    'Autoclave dental':  [
-      { txt:'🌡️ No calienta',       val:'No alcanza temperatura' },
-      { txt:'🚪 No sella bien',     val:'Problema de sellado / puerta' },
-      { txt:'⚠️ Muestra alerta',    val:'Código de alerta / error' },
-      { txt:'✏️ Otro (describir)',  val:'__otro__' }
+    'Autoclave dental': [
+      { txt: '🌡️ No calienta',     val: 'No alcanza temperatura' },
+      { txt: '🚪 No sella bien',   val: 'Problema de sellado' },
+      { txt: '⚠️ Muestra alerta',  val: 'Código de error/alerta' },
+      { txt: '✏️ Describir otro',  val: '__otro__' }
     ],
     'Equipo de rayos X': [
-      { txt:'📷 Imagen borrosa/sin imagen', val:'Imagen de mala calidad o sin imagen' },
-      { txt:'🔌 No enciende',              val:'No enciende o no dispara' },
-      { txt:'📡 Sensor digital falla',      val:'Falla en sensor digital / RVG' },
-      { txt:'✏️ Otro (describir)',          val:'__otro__' }
+      { txt: '📷 Imagen borrosa',       val: 'Imagen de mala calidad' },
+      { txt: '🔌 No enciende',          val: 'No enciende o no dispara' },
+      { txt: '📡 Sensor digital falla', val: 'Falla sensor digital/RVG' },
+      { txt: '✏️ Describir otro',       val: '__otro__' }
     ]
   },
   urgencia: [
-    { txt:'🚨 Hoy mismo',   val:'URGENTE — hoy mismo' },
-    { txt:'📅 Esta semana', val:'Esta semana' },
-    { txt:'🕐 Sin prisa',  val:'Sin urgencia — programar cuando haya disponibilidad' }
+    { txt: '🚨 Hoy mismo',   val: 'URGENTE — hoy mismo' },
+    { txt: '📅 Esta semana', val: 'Esta semana' },
+    { txt: '🕐 Sin prisa',  val: 'Sin urgencia — programar' }
   ]
 };
 
-// Mostrar burbuja después de 3s
-setTimeout(function() {
-  var b = document.getElementById('mbubl');
-  if (b) { b.textContent = '¿Tienes un problema con tu equipo? ¡Cuéntame! 🔧'; b.classList.add('show'); setTimeout(function() { b.classList.remove('show'); }, 6000); }
-}, 3000);
-
-function mimoToggle() { mimoOpen ? mimoCerrar() : mimoAbrir(); }
-
-function mimoCerrar() {
-  mimoOpen = false;
-  var c = document.getElementById('mchat'); if(c) c.classList.remove('open');
+function _$(id) { return document.getElementById(id); }
+function _lockInput(on) {
+  var i=_$('mcinput'),s=document.querySelector('.mcsend');
+  if(i) i.disabled=on; if(s) s.disabled=on;
+}
+function _scrollBot() { var m=_$('mcmsgs'); if(m) setTimeout(function(){m.scrollTop=m.scrollHeight;},60); }
+function _addMsg(html,side) {
+  var m=_$('mcmsgs'); if(!m) return;
+  var row=document.createElement('div');
+  if(side==='user'){row.style.cssText='display:flex;justify-content:flex-end;margin:4px 0';row.innerHTML='<div class="mcout">'+html+'</div>';}
+  else{row.className='mcrow';row.innerHTML='<div class="mcavsm">'+getMimo()+'</div><div class="mcin">'+html+'</div>';}
+  m.appendChild(row); _scrollBot();
+}
+function _showTyping(){var m=_$('mcmsgs');if(!m)return;var t=document.createElement('div');t.className='mcrow';t.id='mtyp';t.innerHTML='<div class="mcavsm">'+getMimo()+'</div><div class="mctyp"><div class="mctd"></div><div class="mctd"></div><div class="mctd"></div></div>';m.appendChild(t);_scrollBot();}
+function _hideTyping(){var t=_$('mtyp');if(t)t.remove();}
+function _say(text,delay,cb){setTimeout(function(){_showTyping();setTimeout(function(){_hideTyping();_addMsg(text,'mimo');if(cb)cb();},700);},delay||0);}
+function _chips(opts,onClick){
+  var m=_$('mcmsgs');if(!m)return;
+  var prev=document.getElementById('mchips-row');if(prev)prev.remove();
+  var row=document.createElement('div');row.className='mcchips';row.id='mchips-row';
+  opts.forEach(function(o){var btn=document.createElement('button');btn.className='mcchip';btn.textContent=o.txt;btn.onclick=function(){row.remove();_lockInput(true);_addMsg(o.txt,'user');onClick(o);};row.appendChild(btn);});
+  m.appendChild(row);_scrollBot();
+}
+function _textInput(placeholder,onSubmit){
+  var m=_$('mcmsgs');if(!m)return;
+  var prev=document.getElementById('minput-row');if(prev)prev.remove();
+  var row=document.createElement('div');row.id='minput-row';row.style.cssText='display:flex;gap:6px;margin:8px 0;padding:0 4px';
+  var inp=document.createElement('input');inp.type='text';inp.placeholder=placeholder;inp.style.cssText='flex:1;padding:9px 12px;border:1.5px solid #B5D4F4;border-radius:8px;font-size:13px;outline:none;font-family:DM Sans,sans-serif;color:#2C2C2A';
+  var btn=document.createElement('button');btn.textContent='Enviar ›';btn.style.cssText='background:#185FA5;color:#fff;border:none;border-radius:8px;padding:9px 14px;font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap;font-family:DM Sans,sans-serif';
+  function sub(){var val=inp.value.trim();if(!val){inp.focus();return;}row.remove();_addMsg(val,'user');onSubmit(val);}
+  btn.onclick=sub;inp.onkeydown=function(e){if(e.key==='Enter')sub();};
+  row.appendChild(inp);row.appendChild(btn);m.appendChild(row);setTimeout(function(){inp.focus();_scrollBot();},80);
 }
 
-function mimoAbrir() {
-  mimoOpen = true;
-  var c = document.getElementById('mchat'); if(c) c.classList.add('open');
-  var n = document.getElementById('mnotif'); if(n) n.style.display='none';
-  var b = document.getElementById('mbubl'); if(b) b.classList.remove('show');
-  if(DX.step === 0) { DX.step = 1; setTimeout(mimoSaludo, 300); }
-}
-
-function mimoAddMsg(txt, side) {
-  var m = document.getElementById('mcmsgs'); if(!m) return;
-  var row = document.createElement('div');
-  row.className = 'mcrow';
-  if(side==='user') {
-    row.style.cssText = 'display:flex;justify-content:flex-end;margin:4px 0';
-    row.innerHTML = '<div class="mcout">'+txt+'</div>';
-  } else {
-    row.innerHTML = '<div class="mcavsm">'+getMimo()+'</div><div class="mcin">'+txt+'</div>';
-  }
-  m.appendChild(row);
-  setTimeout(function(){ m.scrollTop=m.scrollHeight; }, 50);
-}
-
-function mimoTyping(show) {
-  if(show) {
-    var m = document.getElementById('mcmsgs'); if(!m) return;
-    var t = document.createElement('div'); t.className='mcrow'; t.id='mtyp';
-    t.innerHTML = '<div class="mcavsm">'+getMimo()+'</div><div class="mctyp"><div class="mctd"></div><div class="mctd"></div><div class="mctd"></div></div>';
-    m.appendChild(t); m.scrollTop=m.scrollHeight;
-  } else {
-    var el = document.getElementById('mtyp'); if(el) el.remove();
-  }
-}
-
-function mimoSay(txt, delay, cb) {
-  delay = delay || 0;
-  setTimeout(function(){
-    mimoTyping(true);
-    setTimeout(function(){
-      mimoTyping(false);
-      mimoAddMsg(txt,'mimo');
-      if(cb) cb();
-    }, 700);
-  }, delay);
-}
-
-function mimoChips(opts, onClick) {
-  var m = document.getElementById('mcmsgs'); if(!m) return;
-  var row = document.createElement('div'); row.className='mcchips'; row.id='mchips-now';
-  opts.forEach(function(o){
-    var btn = document.createElement('button'); btn.className='mcchip'; btn.textContent=o.txt;
-    btn.onclick = function(){
-      var ac=document.getElementById('mchips-now'); if(ac) ac.remove();
-      mimoLockInput(true);
-      onClick(o);
-    };
-    row.appendChild(btn);
-  });
-  m.appendChild(row); m.scrollTop=m.scrollHeight;
-}
-
-function mimoInput(placeholder, onSubmit) {
-  var m = document.getElementById('mcmsgs'); if(!m) return;
-  var row = document.createElement('div'); row.id='minput-now';
-  row.style.cssText='display:flex;gap:6px;margin:8px 0;padding:0 4px';
-  var inp = document.createElement('input'); inp.type='text'; inp.placeholder=placeholder;
-  inp.style.cssText='flex:1;padding:8px 12px;border:1.5px solid #B5D4F4;border-radius:8px;font-size:13px;outline:none;font-family:DM Sans,sans-serif';
-  var btn = document.createElement('button'); btn.textContent='Enviar ›';
-  btn.style.cssText='background:#185FA5;color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:13px;cursor:pointer;font-weight:600;white-space:nowrap';
-  var submit = function(){
-    var val=inp.value.trim(); if(!val) return;
-    var ac=document.getElementById('minput-now'); if(ac) ac.remove();
-    onSubmit(val);
-  };
-  btn.onclick=submit;
-  inp.onkeydown=function(e){ if(e.key==='Enter') submit(); };
-  row.appendChild(inp); row.appendChild(btn);
-  m.appendChild(row);
-  setTimeout(function(){ inp.focus(); m.scrollTop=m.scrollHeight; }, 100);
-}
-
-function mimoLockInput(lock) {
-  var el=document.getElementById('mcinput'); if(el) el.disabled=lock;
-  var s=document.querySelector('.mcsend'); if(s) s.disabled=lock;
-}
-
-function mimoSaludo() {
-  mimoLockInput(true);
-  mimoSay('¡Hola! Soy <strong>MIMO</strong>, el asistente técnico de MMD Servicios. 👋', 0, function(){
-    mimoSay('Voy a ayudarte a reportar tu situación para conectarte rápidamente con nuestro equipo.', 500, function(){
-      mimoSay('¿Cuál de estos equipos presenta el problema?', 700, function(){
-        mimoChips(MIMO_OPCIONES.equipo, mimoPasoEquipo);
-      });
+function _start(){
+  if(_mimoStarted)return;_mimoStarted=true;_lockInput(true);
+  _say('¡Hola! Soy <strong>MIMO</strong>, el asistente técnico de MMD Servicios 👋',0,function(){
+    _say('Te ayudo a reportar tu situación para conectarte con nuestro equipo.',500,function(){
+      _say('¿Cuál de estos equipos tiene el problema?',700,function(){_chips(_OPTS.equipo,_onEquipo);});
     });
   });
 }
 
-function mimoPasoEquipo(chip) {
-  if(chip.val === '__otro_equipo__') {
-    mimoAddMsg(chip.txt,'user');
-    mimoSay('¿Qué tipo de equipo es? Descríbelo brevemente:', 300, function(){
-      mimoInput('Ej: lámpara de fotocurado, escariador...', function(txt){
-        DX.equipo = txt;
-        mimoAddMsg(txt,'user');
-        mimoSay('Entendido — <strong>'+txt+'</strong>. 🔧', 300, function(){
-          mimoSay('¿Qué falla o problema presenta?', 500, function(){
-            mimoInput('Describe el problema aquí...', function(txt2){
-              DX.falla=txt2; mimoAddMsg(txt2,'user'); mimoPasoUrgencia();
-            });
+function _onEquipo(chip){
+  if(chip.val==='__otro__'){
+    _say('¿Qué tipo de equipo es? Descríbelo brevemente:',300,function(){
+      _textInput('Ej: lámpara de fotocurado, escariador...',function(txt){
+        _DX.equipo=txt;
+        _say('Entendido — <strong>'+txt+'</strong> 🔧',300,function(){
+          _say('¿Qué problema o falla presenta?',500,function(){
+            _textInput('Describe el problema...',function(txt2){_DX.falla=txt2;_askUrgencia();});
           });
         });
       });
     });
   } else {
-    DX.equipo = chip.val;
-    mimoAddMsg(chip.txt,'user');
-    mimoSay('Entendido — <strong>'+chip.val+'</strong>. 🔧', 300, function(){
-      mimoSay('¿Cuál es la falla específica?', 500, function(){
-        mimoChips(MIMO_OPCIONES.falla[DX.equipo], mimoPasoFalla);
-      });
+    _DX.equipo=chip.val;
+    _say('Entendido — <strong>'+chip.val+'</strong> 🔧',300,function(){
+      _say('¿Cuál es la falla específica?',500,function(){_chips(_OPTS.falla[_DX.equipo],_onFalla);});
     });
   }
 }
 
-function mimoPasoFalla(chip) {
-  if(chip.val === '__otro__') {
-    mimoAddMsg(chip.txt,'user');
-    mimoSay('Cuéntame qué está pasando con tu equipo:', 300, function(){
-      mimoInput('Describe la falla aquí...', function(txt){
-        DX.falla=txt; mimoAddMsg(txt,'user'); mimoPasoUrgencia();
-      });
-    });
-  } else {
-    DX.falla = chip.val;
-    mimoAddMsg(chip.txt,'user');
-    mimoPasoUrgencia();
-  }
+function _onFalla(chip){
+  if(chip.val==='__otro__'){
+    _say('Cuéntame qué está pasando:',300,function(){_textInput('Describe la falla...',function(txt){_DX.falla=txt;_askUrgencia();});});
+  } else {_DX.falla=chip.val;_askUrgencia();}
 }
 
-function mimoPasoUrgencia() {
-  mimoSay('Anotado: <strong>'+DX.falla+'</strong>. ✍️', 300, function(){
-    mimoSay('¿Con qué urgencia necesitas atención técnica?', 500, function(){
-      mimoChips(MIMO_OPCIONES.urgencia, mimoPasoUbicacion);
+function _askUrgencia(){
+  _say('Anotado: <strong>'+_DX.falla+'</strong> ✍️',300,function(){
+    _say('¿Con qué urgencia necesitas la atención?',500,function(){_chips(_OPTS.urgencia,_onUrgencia);});
+  });
+}
+
+function _onUrgencia(chip){
+  _DX.urgencia=chip.val;
+  _say('Para asignarte el técnico más cercano —',300,function(){
+    _say('¿En qué ciudad o estado está tu consultorio?',500,function(){
+      _textInput('Ej: CDMX, Monterrey...',function(txt){_DX.ubicacion=txt;_showResumen();});
     });
   });
 }
 
-function mimoPasoUbicacion(chip) {
-  DX.urgencia = chip.val;
-  mimoAddMsg(chip.txt,'user');
-  mimoSay('Para asignarte el técnico más cercano —', 300, function(){
-    mimoSay('¿En qué ciudad o estado está tu consultorio?', 500, function(){
-      mimoInput('Ej: CDMX, Monterrey, Guadalajara...', function(txt){
-        DX.ubicacion=txt; mimoAddMsg(txt,'user'); mimoPasoResumen();
-      });
-    });
-  });
-}
-
-function mimoPasoResumen() {
-  mimoLockInput(true);
-  mimoSay('¡Listo! Aquí está el resumen de tu reporte: 📋', 400, function(){
-    var m = document.getElementById('mcmsgs'); if(!m) return;
-    var row = document.createElement('div'); row.className='mcrow';
-    var res = '<div style="background:#F0F6FF;border:1px solid #B5D4F4;border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.9">'
-      +'🦷 <strong>Equipo:</strong> '+DX.equipo+'<br>'
-      +'🔧 <strong>Falla:</strong> '+DX.falla+'<br>'
-      +'⏰ <strong>Urgencia:</strong> '+DX.urgencia+'<br>'
-      +'📍 <strong>Ubicación:</strong> '+DX.ubicacion
-      +'</div>';
-    row.innerHTML = '<div class="mcavsm">'+getMimo()+'</div><div style="flex:1">'+res+'</div>';
-    m.appendChild(row); m.scrollTop=m.scrollHeight;
-
-    var msg = 'Hola MMD Servicios 👋
-
-Reporte desde mmdservicios.com.mx:
-
-'
-      +'🦷 Equipo: '+DX.equipo+'
-'
-      +'🔧 Falla: '+DX.falla+'
-'
-      +'⏰ Urgencia: '+DX.urgencia+'
-'
-      +'📍 Ubicación: '+DX.ubicacion+'
-
-Quedo en espera. ¡Gracias!';
-    var waUrl = WA+'?text='+encodeURIComponent(msg);
-
+function _showResumen(){
+  _lockInput(true);
+  _say('¡Listo! Resumen de tu reporte: 📋',400,function(){
+    var m=_$('mcmsgs');if(!m)return;
+    var row=document.createElement('div');row.className='mcrow';
+    row.innerHTML='<div class="mcavsm">'+getMimo()+'</div><div style="flex:1"><div style="background:#F0F6FF;border:1px solid #B5D4F4;border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.9">'
+      +'🦷 <strong>Equipo:</strong> '+_DX.equipo+'<br>🔧 <strong>Falla:</strong> '+_DX.falla+'<br>⏰ <strong>Urgencia:</strong> '+_DX.urgencia+'<br>📍 <strong>Ubicación:</strong> '+_DX.ubicacion+'</div></div>';
+    m.appendChild(row);_scrollBot();
+    var msg='Hola MMD Servicios 👋\n\nReporte desde mmdservicios.com.mx:\n\n🦷 Equipo: '+_DX.equipo+'\n🔧 Falla: '+_DX.falla+'\n⏰ Urgencia: '+_DX.urgencia+'\n📍 Ubicación: '+_DX.ubicacion+'\n\nQuedo en espera. ¡Gracias!';
     setTimeout(function(){
-      mimoSay('Haz clic abajo para enviar este reporte a nuestro equipo. Respondemos en <strong>menos de 2 horas</strong>. 🚀', 500, function(){
-        var m2=document.getElementById('mcmsgs'); if(!m2) return;
-        var r2=document.createElement('div'); r2.style.cssText='margin:10px 0;text-align:center';
-        r2.innerHTML='<a href="'+waUrl+'" target="_blank" rel="noopener" '
-          +'style="display:inline-flex;align-items:center;gap:8px;background:#0F6E56;color:#fff;'
-          +'padding:13px 22px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;'
-          +'box-shadow:0 4px 14px rgba(15,110,86,.4)">'
-          +'<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'
-          +'Enviar reporte por WhatsApp</a>';
-        m2.appendChild(r2); m2.scrollTop=m2.scrollHeight;
-
-        setTimeout(function(){
-          var m3=document.getElementById('mcmsgs'); if(!m3) return;
-          var r3=document.createElement('div'); r3.style.cssText='margin:6px 0;text-align:center';
-          r3.innerHTML='<button onclick="mimoReiniciar()" '
-            +'style="background:none;border:1px solid #B5D4F4;border-radius:8px;padding:6px 16px;'
-            +'font-size:12px;color:#185FA5;cursor:pointer;font-family:DM Sans,sans-serif">↩️ Nuevo reporte</button>';
-          m3.appendChild(r3); m3.scrollTop=m3.scrollHeight;
-        }, 800);
+      _say('Envía tu reporte. Respondemos en <strong>menos de 2 horas</strong> 🚀',500,function(){
+        var m2=_$('mcmsgs');if(!m2)return;
+        var r1=document.createElement('div');r1.style.cssText='margin:10px 0;text-align:center';
+        r1.innerHTML='<a href="'+WA+'?text='+encodeURIComponent(msg)+'" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:8px;background:#0F6E56;color:#fff;padding:13px 22px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;box-shadow:0 4px 14px rgba(15,110,86,.4)"><svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>Enviar reporte por WhatsApp</a>';
+        m2.appendChild(r1);
+        setTimeout(function(){var r2=document.createElement('div');r2.style.cssText='margin:6px 0;text-align:center';r2.innerHTML='<button onclick="mimoReiniciar()" style="background:none;border:1px solid #B5D4F4;border-radius:8px;padding:6px 16px;font-size:12px;color:#185FA5;cursor:pointer;font-family:DM Sans,sans-serif">↩️ Nuevo reporte</button>';m2.appendChild(r2);_scrollBot();},800);
       });
-    }, 600);
+    },600);
   });
 }
 
-window.mimoReiniciar = function() {
-  DX = { step:0, equipo:'', falla:'', urgencia:'', ubicacion:'' };
-  var m=document.getElementById('mcmsgs'); if(m) m.innerHTML='';
-  mimoLockInput(true);
-  setTimeout(mimoSaludo, 300);
-};
+function mimoToggle(){_mimoIsOpen?mimoCerrar():mimoAbrir();}
+function mimoAbrir(){_mimoIsOpen=true;var c=_$('mchat');if(c)c.classList.add('open');var n=_$('mnotif');if(n)n.style.display='none';var b=_$('mbubl');if(b)b.classList.remove('show');_start();}
+function mimoCerrar(){_mimoIsOpen=false;var c=_$('mchat');if(c)c.classList.remove('open');}
+function mimoReiniciar(){_mimoStarted=false;_DX={equipo:'',falla:'',urgencia:'',ubicacion:''};var m=_$('mcmsgs');if(m)m.innerHTML='';_lockInput(true);_start();}
 
-// Botones del widget
-var mbtn = document.getElementById('mbtn');
-if(mbtn) mbtn.addEventListener('click', mimoToggle);
-var mccl = document.querySelector('.mccl');
-if(mccl) mccl.addEventListener('click', mimoCerrar);
-// Disable free-text — MIMO controla la conversación
-mimoLockInput(true);
+// Burbuja inicial
+setTimeout(function(){var b=_$('mbubl');if(b){b.textContent='¿Tienes un problema con tu equipo? ¡Cuéntame! 🔧';b.classList.add('show');setTimeout(function(){b.classList.remove('show');},6000);}},3000);
+// Bloquear input libre (MIMO controla el flujo)
+_lockInput(true);
+// Bindear cierre
+var _mccl=document.querySelector('.mccl');if(_mccl)_mccl.onclick=mimoCerrar;
+
 
 // ---- FORMULARIO ----
 function enviarForm(e) {
