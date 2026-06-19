@@ -74,7 +74,7 @@ footer span{color:var(--vmd)}
       <button class="mccl" onclick="mimoCerrar()">&#10005;</button>
     </div>
     <div class="mcmsgs" id="mcmsgs"></div>
-    <div class="mcchips">
+    <div class="mcchips" id="mcchipsFijos">
       <a class="mcchip" href="https://wa.me/5215517903508?text=Hola%20MMD%2C%20quiero%20una%20cotizacion" target="_blank" rel="noopener">Cotización</a>
       <a class="mcchip" href="https://wa.me/5215517903508?text=Hola%20MMD%2C%20quiero%20agendar%20un%20servicio" target="_blank" rel="noopener">Agendar servicio</a>
       <a class="mcchip" href="#unidades" onclick="mimoCerrar()">Ver equipos</a>
@@ -203,53 +203,88 @@ footer span{color:var(--vmd)}
   }
 
   // ----------------------------------------------------------
-  // 5. DATOS DEL DIAGNÓSTICO
+  // 5. DATOS DEL DIAGNOSTICO
   // ----------------------------------------------------------
-  var DX = { equipo: '', falla: '', urgencia: '', ubicacion: '' };
+  var DX = { equipo: '', falla: '', urgencia: '', zona: '', nombre: '' };
 
   var OPTS = {
     equipo: [
-      { txt: '🦷 Unidad dental',  val: 'Unidad dental' },
-      { txt: '💨 Compresor',      val: 'Compresor dental' },
-      { txt: '🔵 Autoclave',      val: 'Autoclave dental' },
-      { txt: '☢️ Rayos X',        val: 'Equipo de rayos X' },
-      { txt: '✏️ Otro equipo',    val: '__otro__' }
+      { txt: 'Unidad dental',    val: 'Unidad dental' },
+      { txt: 'Compresor dental', val: 'Compresor dental' },
+      { txt: 'Rayos X dental',   val: 'Rayos X dental' },
+      { txt: 'Autoclave',        val: 'Autoclave' },
+      { txt: 'Otro equipo',      val: '__otro__' }
     ],
     falla: {
       'Unidad dental': [
-        { txt: '🌊 Pérdida de succión',      val: 'Pérdida de succión' },
-        { txt: '🪑 Problema en el sillón',   val: 'Problema en el sillón' },
-        { txt: '⚙️ Fallo en piezas de mano', val: 'Fallo en piezas de mano' },
-        { txt: '✏️ Describir otro',          val: '__otro__' }
+        { txt: 'No enciende',                    val: 'No enciende' },
+        { txt: 'No sale agua',                   val: 'No sale agua' },
+        { txt: 'No tiene aire',                  val: 'No tiene aire' },
+        { txt: 'Falla en jeringa triple',        val: 'Falla en jeringa triple' },
+        { txt: 'El sillon no sube o baja',       val: 'El sillon no sube o baja' },
+        { txt: 'Baja presion en piezas de mano', val: 'Baja presion en piezas de mano' },
+        { txt: 'Otro problema',                  val: '__otro__' }
       ],
       'Compresor dental': [
-        { txt: '🔌 No enciende',       val: 'No enciende' },
-        { txt: '📉 Perdió potencia',   val: 'Perdió potencia' },
-        { txt: '🔊 Hace ruido raro',   val: 'Ruido inusual' },
-        { txt: '✏️ Describir otro',    val: '__otro__' }
+        { txt: 'No enciende',                            val: 'No enciende' },
+        { txt: 'Perdio potencia',                        val: 'Perdio potencia' },
+        { txt: 'Hace ruido extrano',                     val: 'Hace ruido extrano' },
+        { txt: 'Se apaga despues de trabajar un tiempo', val: 'Se apaga despues de trabajar un tiempo' },
+        { txt: 'No genera presion',                      val: 'No genera presion' },
+        { txt: 'Otro problema',                          val: '__otro__' }
       ],
-      'Autoclave dental': [
-        { txt: '🌡️ No calienta',      val: 'No alcanza temperatura' },
-        { txt: '🚪 No sella bien',    val: 'Problema de sellado' },
-        { txt: '⚠️ Muestra alerta',   val: 'Código de error/alerta' },
-        { txt: '✏️ Describir otro',   val: '__otro__' }
+      'Rayos X dental': [
+        { txt: 'No enciende',                 val: 'No enciende' },
+        { txt: 'No dispara correctamente',    val: 'No dispara correctamente' },
+        { txt: 'Imagen deficiente',           val: 'Imagen deficiente' },
+        { txt: 'Problema en controles',       val: 'Problema en controles' },
+        { txt: 'Problema en brazo o soporte', val: 'Problema en brazo o soporte' },
+        { txt: 'Otro problema',               val: '__otro__' }
       ],
-      'Equipo de rayos X': [
-        { txt: '📷 Imagen borrosa',     val: 'Imagen de mala calidad' },
-        { txt: '🔌 No enciende',        val: 'No enciende o no dispara' },
-        { txt: '📡 Sensor digital falla', val: 'Falla sensor digital/RVG' },
-        { txt: '✏️ Describir otro',     val: '__otro__' }
+      'Autoclave': [
+        { txt: 'No calienta',       val: 'No calienta' },
+        { txt: 'No genera presion', val: 'No genera presion' },
+        { txt: 'Fuga de vapor',     val: 'Fuga de vapor' },
+        { txt: 'No completa ciclo', val: 'No completa ciclo' },
+        { txt: 'Error en pantalla', val: 'Error en pantalla' },
+        { txt: 'Otro problema',     val: '__otro__' }
       ]
     },
     urgencia: [
-      { txt: '🚨 Hoy mismo',   val: 'URGENTE — hoy mismo' },
-      { txt: '📅 Esta semana', val: 'Esta semana' },
-      { txt: '🕐 Sin prisa',  val: 'Sin urgencia — programar' }
+      { txt: 'Necesito resolverlo hoy',           val: 'Necesito resolverlo hoy' },
+      { txt: 'Me gustaria revisarlo esta semana', val: 'Me gustaria revisarlo esta semana' },
+      { txt: 'Quiero una cotizacion primero',     val: 'Quiero una cotizacion primero' }
     ]
   };
 
+  var RESPUESTA_TECNICA = {
+    'Compresor dental|Perdio potencia': 'Este problema puede estar relacionado con desgaste interno, sobrecalentamiento o perdida de compresion.',
+    'Compresor dental|No enciende': 'Esto puede deberse a falla electrica, proteccion termica activada o problema interno en motor.',
+    'Compresor dental|No genera presion': 'Podria existir fuga interna, problema en valvulas o desgaste en cabezales.',
+    'Unidad dental|No sale agua': 'Normalmente esto esta relacionado con obstruccion, baja presion o falla interna en lineas.',
+    'Unidad dental|No tiene aire': 'Podria existir restriccion neumatica, fuga o falla en alimentacion del sistema.',
+    'Unidad dental|El sillon no sube o baja': 'Puede estar relacionado con falla electrica, actuadores o pedal de control.',
+    'Autoclave|No calienta': 'Puede existir falla en resistencia, sensores o sistema interno de calentamiento.',
+    'Autoclave|Fuga de vapor': 'Esto puede indicar desgaste en sellos o perdida de presion interna.',
+    'Rayos X dental|Imagen deficiente': 'Puede existir descalibracion o falla interna en emision.',
+    'Rayos X dental|No enciende': 'Podria existir problema electrico o falla interna en componentes.'
+  };
+  var RESPUESTA_GENERICA = 'Entendido. Nuestro equipo tecnico necesitara revisar este caso mas a detalle para determinar el origen exacto de la falla.';
+
   // ----------------------------------------------------------
-  // 6. FLUJO DE DIAGNÓSTICO
+  // 5b. OCULTAR / MOSTRAR BOTONES FIJOS DURANTE EL FLUJO
+  // ----------------------------------------------------------
+  function ocultarAccionesFijas() {
+    var f = document.getElementById('mcchipsFijos');
+    if (f) f.style.display = 'none';
+  }
+  function mostrarAccionesFijas() {
+    var f = document.getElementById('mcchipsFijos');
+    if (f) f.style.display = 'flex';
+  }
+
+  // ----------------------------------------------------------
+  // 6. FLUJO DE DIAGNOSTICO
   // ----------------------------------------------------------
   var started = false;
 
@@ -257,23 +292,22 @@ footer span{color:var(--vmd)}
     if (started) return;
     started = true;
     lockInput(true);
-    say('¡Hola! Soy <strong>MIMO</strong>, el asistente técnico de MMD Servicios 👋', 0, function() {
-      say('Te ayudo a reportar la situación de tu equipo para conectarte con nuestro equipo técnico.', 500, function() {
-        say('¿Cuál de estos equipos tiene el problema?', 700, function() {
-          chips(OPTS.equipo, onEquipo);
-        });
+    ocultarAccionesFijas();
+    say('Hola 👋<br>Soy MIMO, asistente tecnico de MMD Servicios.<br>Te ayudare a identificar tu problema para conectarte mas rapido con nuestro equipo tecnico especializado.', 0, function() {
+      say('¿En que equipo necesitas apoyo tecnico?', 600, function() {
+        chips(OPTS.equipo, onEquipo);
       });
     });
   }
 
   function onEquipo(chip) {
     if (chip.val === '__otro__') {
-      say('¿Qué tipo de equipo es? Descríbelo brevemente:', 300, function() {
-        textInput('Ej: lámpara de fotocurado, escariador...', function(txt) {
+      say('¿Que equipo necesitas revisar? Escribelo aqui:', 300, function() {
+        textInput('Ej: lampara de fotocurado, escariador...', function(txt) {
           DX.equipo = txt;
-          say('Entendido — <strong>' + txt + '</strong> 🔧', 300, function() {
-            say('¿Qué problema o falla presenta?', 500, function() {
-              textInput('Describe el problema aquí...', function(txt2) {
+          say('Perfecto 👍 Revisemos tu equipo.', 400, function() {
+            say('¿Que problema presenta?', 500, function() {
+              textInput('Describe el problema...', function(txt2) {
                 DX.falla = txt2;
                 askUrgencia();
               });
@@ -283,8 +317,10 @@ footer span{color:var(--vmd)}
       });
     } else {
       DX.equipo = chip.val;
-      say('Entendido — <strong>' + chip.val + '</strong> 🔧', 300, function() {
-        say('¿Cuál es la falla específica que observas?', 500, function() {
+      var nombreCorto = chip.val === 'Unidad dental' ? 'unidad' : chip.val === 'Compresor dental' ? 'compresor' : chip.val === 'Rayos X dental' ? 'equipo' : 'autoclave';
+      var nombreLargo = chip.val === 'Unidad dental' ? 'unidad dental' : chip.val === 'Compresor dental' ? 'compresor' : chip.val === 'Rayos X dental' ? 'equipo de Rayos X' : 'autoclave';
+      say('Perfecto 👍 Revisemos tu ' + nombreCorto + '.', 400, function() {
+        say('¿Que problema presenta tu ' + nombreLargo + '?', 500, function() {
           chips(OPTS.falla[DX.equipo], onFalla);
         });
       });
@@ -293,8 +329,8 @@ footer span{color:var(--vmd)}
 
   function onFalla(chip) {
     if (chip.val === '__otro__') {
-      say('Cuéntame qué está pasando con tu equipo:', 300, function() {
-        textInput('Describe la falla...', function(txt) {
+      say('Cuentame que esta pasando:', 300, function() {
+        textInput('Describe el problema...', function(txt) {
           DX.falla = txt;
           askUrgencia();
         });
@@ -306,20 +342,27 @@ footer span{color:var(--vmd)}
   }
 
   function askUrgencia() {
-    say('Anotado: <strong>' + DX.falla + '</strong> ✍️', 300, function() {
-      say('¿Con qué urgencia necesitas la atención técnica?', 500, function() {
-        chips(OPTS.urgencia, onUrgencia);
-      });
+    say('¿Que tan pronto necesitas solucionar este problema?', 400, function() {
+      chips(OPTS.urgencia, onUrgencia);
     });
   }
 
   function onUrgencia(chip) {
     DX.urgencia = chip.val;
-    say('Para asignarte el técnico más cercano —', 300, function() {
-      say('¿En qué ciudad o estado está tu consultorio?', 500, function() {
-        textInput('Ej: CDMX, Monterrey, Guadalajara...', function(txt) {
-          DX.ubicacion = txt;
-          showResumen();
+    var key = DX.equipo + '|' + DX.falla;
+    var respuesta = RESPUESTA_TECNICA[key] || RESPUESTA_GENERICA;
+    say(respuesta, 300, function() {
+      say('Para continuar necesitamos algunos datos.', 600, function() {
+        say('¿En que zona te encuentras?', 500, function() {
+          textInput('Ej: CDMX, Estado de Mexico, Guadalajara...', function(txt) {
+            DX.zona = txt;
+            say('¿Nos compartes tu nombre?', 500, function() {
+              textInput('Tu nombre...', function(txt2) {
+                DX.nombre = txt2;
+                showResumen();
+              });
+            });
+          });
         });
       });
     });
@@ -327,55 +370,43 @@ footer span{color:var(--vmd)}
 
   function showResumen() {
     lockInput(true);
-    say('¡Listo! Aquí está el resumen de tu reporte: 📋', 400, function() {
-      var m = $('mcmsgs'); if (!m) return;
-      var row = document.createElement('div');
-      row.className = 'mcrow';
-      row.innerHTML = '<div class="mcavsm">' + getMimo() + '</div>'
-        + '<div style="flex:1"><div style="background:#F0F6FF;border:1px solid #B5D4F4;border-radius:10px;padding:14px 16px;font-size:13px;line-height:1.9">'
-        + '🦷 <strong>Equipo:</strong> ' + DX.equipo + '<br>'
-        + '🔧 <strong>Falla:</strong> ' + DX.falla + '<br>'
-        + '⏰ <strong>Urgencia:</strong> ' + DX.urgencia + '<br>'
-        + '📍 <strong>Ubicación:</strong> ' + DX.ubicacion
-        + '</div></div>';
-      m.appendChild(row);
-      scrollBottom();
+    say('Perfecto ✅<br>Ya tengo toda la informacion necesaria.<br>Voy a conectarte con nuestro equipo tecnico especializado.', 400, function() {
+      var m = document.getElementById('mcmsgs'); if (!m) return;
 
-      var msg = 'Hola MMD Servicios 👋\n\nReporte desde mmdservicios.com.mx:\n\n'
-        + '🦷 Equipo: ' + DX.equipo + '\n'
-        + '🔧 Falla: ' + DX.falla + '\n'
-        + '⏰ Urgencia: ' + DX.urgencia + '\n'
-        + '📍 Ubicación: ' + DX.ubicacion + '\n\nQuedo en espera. ¡Gracias!';
+      var msg = 'Hola MMD.\n\nMIMO me ayudo con un diagnostico inicial.\n\nComparto mi informacion:\n\n'
+        + 'Equipo: ' + DX.equipo + '\n\n'
+        + 'Problema: ' + DX.falla + '\n\n'
+        + 'Prioridad: ' + DX.urgencia + '\n\n'
+        + 'Zona: ' + DX.zona + '\n\n'
+        + 'Nombre: ' + DX.nombre + '\n\n'
+        + 'Quedo atento a su apoyo.';
 
       setTimeout(function() {
-        say('Envía este reporte a nuestro equipo. Respondemos en <strong>menos de 2 horas</strong>. 🚀', 500, function() {
-          var m2 = $('mcmsgs'); if (!m2) return;
+        var r1 = document.createElement('div');
+        r1.style.cssText = 'margin:10px 0;text-align:center';
+        r1.innerHTML = '<a href="' + WA + '?text=' + encodeURIComponent(msg) + '" '
+          + 'target="_blank" rel="noopener" '
+          + 'style="display:inline-flex;align-items:center;gap:8px;background:#0F6E56;color:#fff;'
+          + 'padding:13px 22px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;'
+          + 'box-shadow:0 4px 14px rgba(15,110,86,.4)">'
+          + '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'
+          + 'Enviar diagnostico a especialista</a>';
+        m.appendChild(r1);
+        scrollBottom();
 
-          // WhatsApp button
-          var r1 = document.createElement('div');
-          r1.style.cssText = 'margin:10px 0;text-align:center';
-          r1.innerHTML = '<a href="' + WA + '?text=' + encodeURIComponent(msg) + '" '
-            + 'target="_blank" rel="noopener" '
-            + 'style="display:inline-flex;align-items:center;gap:8px;background:#0F6E56;color:#fff;'
-            + 'padding:13px 22px;border-radius:10px;font-size:14px;font-weight:700;text-decoration:none;'
-            + 'box-shadow:0 4px 14px rgba(15,110,86,.4)">'
-            + '<svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#fff"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'
-            + 'Enviar reporte por WhatsApp</a>';
-          m2.appendChild(r1);
-
-          // Restart button
-          setTimeout(function() {
-            var r2 = document.createElement('div');
-            r2.style.cssText = 'margin:6px 0;text-align:center';
-            r2.innerHTML = '<button onclick="window.mimoReiniciar()" '
-              + 'style="background:none;border:1px solid #B5D4F4;border-radius:8px;padding:6px 16px;'
-              + 'font-size:12px;color:#185FA5;cursor:pointer;font-family:DM Sans,sans-serif">'
-              + '↩️ Nuevo reporte</button>';
-            m2.appendChild(r2);
-            scrollBottom();
-          }, 800);
-        });
-      }, 600);
+        setTimeout(function() {
+          var r2 = document.createElement('div');
+          r2.style.cssText = 'margin:6px 0;text-align:center';
+          r2.innerHTML = '<button onclick="window.mimoReiniciar()" '
+            + 'style="background:none;border:1px solid #B5D4F4;border-radius:8px;padding:6px 16px;'
+            + 'font-size:12px;color:#185FA5;cursor:pointer;font-family:DM Sans,sans-serif">'
+            + '↩️ Nuevo diagnostico</button>';
+          m.appendChild(r2);
+          scrollBottom();
+          // Flujo terminado: volver a mostrar los botones fijos
+          mostrarAccionesFijas();
+        }, 800);
+      }, 500);
     });
   }
 
@@ -386,46 +417,51 @@ footer span{color:var(--vmd)}
 
   function mimoOpen_fn() {
     isOpen = true;
-    var c = $('mchat'); if (c) c.classList.add('open');
-    var n = $('mnotif'); if (n) n.style.display = 'none';
-    var b = $('mbubl'); if (b) b.classList.remove('show');
+    var c = document.getElementById('mchat'); if (c) c.classList.add('open');
+    var n = document.getElementById('mnotif'); if (n) n.style.display = 'none';
+    var b = document.getElementById('mbubl'); if (b) b.classList.remove('show');
     start();
   }
 
   function mimoClose_fn() {
     isOpen = false;
-    var c = $('mchat'); if (c) c.classList.remove('open');
+    var c = document.getElementById('mchat'); if (c) c.classList.remove('open');
   }
 
   function mimoToggle_fn() {
     isOpen ? mimoClose_fn() : mimoOpen_fn();
   }
 
-  // Expose globally (llamado desde onclick en HTML del widget)
+  // Exponer globalmente (llamado desde onclick en HTML del widget)
   window.mimoToggle = mimoToggle_fn;
   window.mimoCerrar = mimoClose_fn;
   window.mimoReiniciar = function() {
     started = false;
-    DX = { equipo: '', falla: '', urgencia: '', ubicacion: '' };
-    var m = $('mcmsgs'); if (m) m.innerHTML = '';
+    DX = { equipo: '', falla: '', urgencia: '', zona: '', nombre: '' };
+    var m = document.getElementById('mcmsgs'); if (m) m.innerHTML = '';
     lockInput(true);
+    ocultarAccionesFijas();
     start();
   };
+  // mimoEnv como guardia de seguridad (input fijo del widget queda
+  // deshabilitado durante el flujo; el HTML estatico referencia esta
+  // funcion en su onclick/onkeydown)
+  window.mimoEnv = function() { /* input fijo deshabilitado durante el flujo guiado */ };
 
   // ----------------------------------------------------------
-  // 8. BURBUJA INICIAL (después de 3 segundos)
+  // 8. BURBUJA INICIAL (despues de 3 segundos)
   // ----------------------------------------------------------
   setTimeout(function() {
-    var b = $('mbubl');
+    var b = document.getElementById('mbubl');
     if (b) {
-      b.textContent = '¿Tienes un problema con tu equipo? ¡Cuéntame! 🔧';
+      b.textContent = '¿Tienes un problema con tu equipo? ¡Cuentame! 🔧';
       b.classList.add('show');
       setTimeout(function() { b.classList.remove('show'); }, 6000);
     }
   }, 3000);
 
   // ----------------------------------------------------------
-  // 9. BINDEAR BOTÓN DE CIERRE (.mccl)
+  // 9. BINDEAR BOTON DE CIERRE (.mccl)
   // ----------------------------------------------------------
   setTimeout(function() {
     var cl = document.querySelector('.mccl');
